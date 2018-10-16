@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html ng-app="studentManager" lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+    <script src="challenge4.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div ng-controller="studentController as controller" class="container">
+        <h1>Students</h1>
+        <div class="row">
+            <div class="col-sm">
+                <span>Active Students: {{controller.getActiveStudents()}}</span>
+                <br>
+                <span>Inactive Students: {{controller.getInactiveStudents()}}</span>
+            </div>
+            <div class="col-sm">
+                <button class="btn btn-primary float-right dropdown-toggle" data-toggle="collapse" data-target="#newStudentForm">Add Student</button>
+            </div>
+        </div>
+        <div class="collapse" id="newStudentForm">
+            <form ng-submit="controller.addStudent()">
+                <div class="form-group">
+                    <label for="studentNumberInput">Student Number:</label>
+                    <input class="form-control" type="text" placeholder="Student Number" id="studentNumberInput" ng-model="controller.studentNumberText" ng-required="true" pattern="[0-9]+">
+                </div>
+                <div class="form-group">
+                    <label for="nameInput">Name:</label>
+                    <input class="form-control" type="text" placeholder="Name" id="nameInput" ng-model="controller.nameText" ng-required="true" pattern="[A-Za-z ]+">
+                </div>
+                <div class="form-group">
+                    <label for="emailInput">Email:</label>
+                    <input class="form-control" type="email" id="emailInput" ng-model="controller.emailText" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumberInput">Phone Number:</label>
+                    <input class="form-control" type="tel" id="phoneNumberInput" ng-model="controller.phoneNumberText" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="gpaInput">GPA:</label>
+                    <input class="form-control" type="text" placeholder="GPA" id="gpaInput" ng-model="controller.gpaText" ng-required="true" pattern="[0-9.]+">
+                </div>
+                <div class="form-group">
+                    <label for="academicPlanInput">Academic Plan:</label>
+                    <input class="form-control" type="text" placeholder="Academic Plan" id="academicPlanInput" ng-model="controller.academicPlanText" ng-required="true" pattern="[A-Za-z ]+">
+                </div>
+                <div class="form-group">
+                    <label for="levelInput">Level:</label>
+                    <input class="form-control" type="text" placeholder="Level" id="levelInput" ng-model="controller.levelText" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="studentStatusInput">Status:</label>
+                    <select id="studentStatusInput" class="form-control" ng-model="controller.selectedStudentStatus" ng-options="item for item in controller.possibleStudentStatuses"></select>
+                </div>
+
+                <input class="btn btn-primary" type="submit" value="Add">
+            </form>
+            <br>
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Student Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">GPA</th>
+                    <th scope="col">Academic Plan</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="student in controller.students track by $index">
+                    <td>{{student.studentNumber}}</td>
+                    <td>{{student.name}}</td>
+                    <td>{{student.email}}</td>
+                    <td>{{student.phoneNumber}}</td>
+                    <td>{{student.gpa}}</td>
+                    <td>{{student.academicPlan}}</td>
+                    <td>{{student.level}}</td>
+                    <td>{{student.status}}</td>
+                    <td><button ng-click="controller.deleteStudent($index)" class="btn btn-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+</body>
+
+</html>
